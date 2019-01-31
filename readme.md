@@ -1,8 +1,8 @@
-# TorTipper
+# OnionTipper
 A tipping system implemented in PHP using the Laravel framework to split donations across tor relays.
 
 ## Hosted Instance
-Once this project reaches a MVP state, I plan on hosting an instance at [https://tortipper.elyc.in](https://tortipper.elyc.in).
+Once this project reaches a MVP state, I plan on hosting an instance at [https://oniontipper.elyc.in](https://tortipper.elyc.in).
 
 ## Running your own instance
 This project is based off of the laravel framework and will require the following package requirements.

@@ -1,69 +1,71 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# TorTipper
+A tipping system implemented in PHP using the Laravel framework to split donations across tor relays.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Hosted Instance
+Once this project reaches a MVP state, I plan on hosting an instance at [https://tortipper.elyc.in](https://tortipper.elyc.in).
 
-## About Laravel
+## Running your own instance
+This project is based off of the laravel framework and will require the following package requirements.
+```bash
+mysql-server - The database engine that will store the relay information.
+php7.2-fpm - The language this application is written in.
+composer - Used to download PHP Libraries.
+node - Compiling the latest frontend.
+bitcoind - Bitcoin Daemon
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Configure bitcoin daemon  
+Bitcoin stores its configuration at `~/.bitcoin/bitcoin.conf` but is not created by default.  
+Please add the following to the newly created file for a basic configuration.
+```text
+# Bind the RPC interface to localhost so nobody can access it but the server.
+rpcbind=127.0.0.1
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+# RPC Username and password
+rpcuser=CHANGE_ME
+rpcpassword=CHANGE_ME
 
-## Learning Laravel
+# Allow localhost to access the RPC.
+rpcallowip=127.0.0.1/32
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+# Do not use more than 550 MB of blockchain disk space (prune node)
+prune=550
+```
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+Installation Instructions
+```bash
+# Download the project source code
+git clone git@github.com:Elycin/TorTipper.git
+cd TorTipper
 
-## Laravel Sponsors
+# Install the packages 
+composer install
+npm install
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+# Compile the frontend
+npm run prod
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
+# Copy the example environment file to the production environment file.
+cp .env.example .env
+
+# Edit the .env, set APP_DEBUG to `false` and edit other fields: MySQL and Bitcoin RPC.
+nano .env
+```
+
+Automatic Maintenance  
+Please add the following string to your crontab to allow that application to automatically download new relay information.
+```bash
+* * * * * cd /path-to-repository && php artisan schedule:run >> /dev/null 2>&1
+```
+
+At this point, you will need to configure your webserver to provide access to the project by referencing the `/public` directory in the project's working directory.
 
 ## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+All forms of contribution or suggestions are welcome in the form of a issue or a pull request.
 
 ## License
+MIT - Please see `license.md` for the full details.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Contributors
+[Phoul](https://twitter.com/Phoul) - Advice 

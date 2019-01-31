@@ -65,7 +65,7 @@ At this point, you will need to configure your webserver to provide access to th
 All forms of contribution or suggestions are welcome in the form of a issue or a pull request.
 
 ## License
-MIT - Please see `license.md` for the full details.
+MIT - Please see [license.md](https://github.com/Elycin/TorTipper/blob/master/license.md) for the full details.
 
 ## Contributors
 [Phoul](https://twitter.com/Phoul) - Advice 
